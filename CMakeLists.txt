@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.25.0)
 project(3DRenderer VERSION 0.1.0 LANGUAGES C)
-#set(CMAKE_C_STANDARD 98)
-#set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD_REQUIRED ON)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
-    add_compile_options(-Wall -Wextra -Wpedantic -Wshadow)
+    add_compile_options(-Wall -std=c99 -Wpedantic -Wshadow)
 endif()
 # Find SDL2
 find_package(SDL2 REQUIRED)

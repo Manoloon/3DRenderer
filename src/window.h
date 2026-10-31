@@ -3,8 +3,9 @@
 #include <SDL2/SDL.h> 
 #include <stdio.h>
 #include "constants.h"
+#include "globals.h"
 
-bool init_window(SDL_Window* window,SDL_Renderer* renderer)
+bool init_window()
 {
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) != 0)
     {
@@ -31,7 +32,7 @@ bool init_window(SDL_Window* window,SDL_Renderer* renderer)
     return true;
 }
 
-void destroy_window(SDL_Window* window, SDL_Renderer* renderer)
+void destroy_window()
 {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
