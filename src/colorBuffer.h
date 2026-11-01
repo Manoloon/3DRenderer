@@ -6,11 +6,11 @@
 #include "globals.h"
 void clearColorBuffer(uint32_t color)
 {
-    for(int y = 0; y < SCREEN_H; y++)
+    for(int y = 0; y < window_height; y++)
     {
-        for(int x = 0; x < SCREEN_W;x++)
+        for(int x = 0; x < window_width;x++)
         {
-            color_buffer[(SCREEN_W * y) + x] = color;
+            color_buffer[(window_width * y) + x] = color;
         }
     }
 }
@@ -20,7 +20,7 @@ void updateColorBuffer()
     SDL_UpdateTexture(color_buffer_texture,
                     NULL,
                     color_buffer,
-                    (int)SCREEN_W * (int)SCREEN_H);
+                    (int)window_width * (int)window_height);
     SDL_RenderCopy(renderer,color_buffer_texture,NULL,NULL);
 }
 
@@ -29,7 +29,7 @@ void renderColorBuffer()
     SDL_UpdateTexture(color_buffer_texture,
                         NULL,
                         color_buffer,
-                        SCREEN_W * sizeof(uint32_t));
+                        window_width * sizeof(uint32_t));
     SDL_RenderCopy(renderer,
                     color_buffer_texture,
                     NULL,

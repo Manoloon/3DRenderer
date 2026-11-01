@@ -8,7 +8,7 @@
 // remember 0xFFEE1100 -> 0xAA-RR-GG-BB
 bool begin_play()
 {
-    color_buffer = (uint32_t*)malloc(sizeof(uint32_t) * SCREEN_W * SCREEN_H);
+    color_buffer = (uint32_t*)malloc(sizeof(uint32_t) * window_width * window_height);
     if(color_buffer == NULL)
     {
         fprintf(stderr,"Failed to allocate memory for the color buffer\n");
@@ -17,7 +17,7 @@ bool begin_play()
     color_buffer_texture = SDL_CreateTexture(renderer,
                                 SDL_PIXELFORMAT_ARGB8888,
                                 SDL_TEXTUREACCESS_STREAMING,
-                                SCREEN_W,SCREEN_H);
+                                window_width,window_height);
     if(color_buffer_texture == NULL)
     {
         fprintf(stderr,"FAILED to construct the color buffer texture\n");
@@ -47,15 +47,29 @@ void process_input(void)
         }
     }
 }
+void draw_grid(uint32_t color,uint8_t cellSize)
+{
+    if(cellSize < 1) return;
+    for(int y = 0; y < window_height;y++)
+    {
+        for(int x = 0; x < window_width;x++)
+        {
+            if(x%cellSize == 0 || y%cellSize == 0)
+            {
+                color_buffer[(window_width * y) + x] = color;
+            }
+        }
+    }
+}
 
-void draw()
+void draw(void)
 {
     SDL_SetRenderDrawColor(renderer,64,64,64,255);
     SDL_RenderClear(renderer);
 
     renderColorBuffer();
-    clearColorBuffer(0xFFFFFF00);
-
+    clearColorBuffer(0xFF111111);
+    draw_grid(0xFFFFFF00,32);
     SDL_RenderPresent(renderer);
 }
 
