@@ -47,21 +47,36 @@ void process_input(void)
         }
     }
 }
+// Exercise 1
 void draw_grid(uint32_t color,uint8_t cellSize)
 {
     if(cellSize < 1) return;
     int x = 0;
-    for(int y = 0; y < window_height;y++)
+    for(int y = 0; y < window_height;y+=cellSize)
     {
         while(x < window_width)
         {
-            if(x % cellSize == 0 || y % cellSize == 0)
-            {
-                color_buffer[(window_width * y) + x] = color;
-            }
-            x++;
+            color_buffer[(window_width * y) + x] = color;
+            x+=cellSize;
         }
         x=0;
+    }
+}
+// exercise 2
+/// pos x, pos y, width , height , color
+void draw_rect(int x,int y, int width, int height, uint32_t color)
+{
+    if(x > window_width || x < 0) return;
+    if(y > window_height || y < 0) return;
+    int xOffset =0;
+    for(int yOffset=0; yOffset < height; yOffset++)
+    {
+        while(xOffset < width)
+        {
+            color_buffer[(window_width * (yOffset+y)) + (xOffset+x)] = color;
+            xOffset++;
+        }
+        xOffset = 0;
     }
 }
 
@@ -69,12 +84,16 @@ void draw(void)
 {
     SDL_SetRenderDrawColor(renderer,64,64,64,255);
     SDL_RenderClear(renderer);
-    draw_grid(0xFFFFFF00,32);
+    draw_grid(0xFFFFFF00,8);
+    draw_rect(10,60,100,120,0xFF0000FF);
+    draw_rect(100,10,60,120,0xFFFF0000);
+    draw_rect(120,100,100,20,0xFF00FF00);
     renderColorBuffer();
 
     clearColorBuffer(0xFF000000);
     SDL_RenderPresent(renderer);
 }
+
 
 void update()
 {
