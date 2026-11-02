@@ -68,15 +68,15 @@ void draw_rect(int x,int y, int width, int height, uint32_t color)
 {
     if(x > window_width || x < 0) return;
     if(y > window_height || y < 0) return;
-    int xOffset =0;
-    for(int yOffset=0; yOffset < height; yOffset++)
+    int currentX =0;
+    for(int currentY=0; currentY < height; currentY++)
     {
-        while(xOffset < width)
+        while(currentX < width)
         {
-            color_buffer[(window_width * (yOffset+y)) + (xOffset+x)] = color;
-            xOffset++;
+            color_buffer[(window_width * (currentY+y)) + (currentX+x)] = color;
+            currentX++;
         }
-        xOffset = 0;
+        currentX = 0;
     }
 }
 
