@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include "vector.h"
 
 // TODO : all of these to config ini file
 extern bool is_app_running;

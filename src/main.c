@@ -2,6 +2,10 @@
 #include "display.h"
 #include "exercises.h"
 #include "globals.h"
+#include "vector.h"
+
+#define N_POINTS 9*9*9
+vec3_t cube[N_POINTS];
 
 // remember 0xFFEE1100 -> 0xAA-RR-GG-BB
 bool begin_play()
@@ -20,6 +24,20 @@ bool begin_play()
     {
         fprintf(stderr,"FAILED to construct the color buffer texture\n");
         return false;
+    }
+
+    // cube
+    int point_count =0;
+    for(float x = -1.0; x <= 1; x +=0.25)
+    {
+        for(float y = -1.0; y <= 1; y +=0.25)
+        {
+            for(float z = -1.0; z <= 1; z +=0.25)
+            {
+                vec3_t new_point={x,y,z};
+                cube[point_count++] = new_point;
+            }
+        }
     }
     return true;
 }
