@@ -50,15 +50,18 @@ void process_input(void)
 void draw_grid(uint32_t color,uint8_t cellSize)
 {
     if(cellSize < 1) return;
+    int x = 0;
     for(int y = 0; y < window_height;y++)
     {
-        for(int x = 0; x < window_width;x++)
+        while(x < window_width)
         {
-            if(x%cellSize == 0 || y%cellSize == 0)
+            if(x % cellSize == 0 || y % cellSize == 0)
             {
                 color_buffer[(window_width * y) + x] = color;
             }
+            x++;
         }
+        x=0;
     }
 }
 
@@ -66,10 +69,10 @@ void draw(void)
 {
     SDL_SetRenderDrawColor(renderer,64,64,64,255);
     SDL_RenderClear(renderer);
-
-    renderColorBuffer();
-    clearColorBuffer(0xFF111111);
     draw_grid(0xFFFFFF00,32);
+    renderColorBuffer();
+
+    clearColorBuffer(0xFF000000);
     SDL_RenderPresent(renderer);
 }
 
