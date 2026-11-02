@@ -1,8 +1,4 @@
-#ifndef WINDOW_H
-#define WINDOW_H
-#include <SDL2/SDL.h> 
-#include <stdio.h>
-#include "constants.h"
+#include "display.h"
 #include "globals.h"
 
 bool init_window()
@@ -53,4 +49,35 @@ void destroy_window()
     SDL_DestroyWindow(window);
     SDL_Quit();
 }
-#endif
+
+void clearColorBuffer(uint32_t color)
+{
+    for(int y = 0; y < window_height; y++)
+    {
+        for(int x = 0; x < window_width;x++)
+        {
+            color_buffer[(window_width * y) + x] = color;
+        }
+    }
+}
+
+void updateColorBuffer()
+{
+    SDL_UpdateTexture(color_buffer_texture,
+                    NULL,
+                    color_buffer,
+                    (int)window_width * (int)window_height);
+    SDL_RenderCopy(renderer,color_buffer_texture,NULL,NULL);
+}
+
+void renderColorBuffer()
+{
+    SDL_UpdateTexture(color_buffer_texture,
+                        NULL,
+                        color_buffer,
+                        window_width * sizeof(uint32_t));
+    SDL_RenderCopy(renderer,
+                    color_buffer_texture,
+                    NULL,
+                    NULL);
+}

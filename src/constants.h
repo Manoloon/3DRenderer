@@ -1,6 +1,0 @@
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
-
-#define DEFAULT_SCREEN_H 480
-#define DEFAULT_SCREEN_W 640
-#endif
