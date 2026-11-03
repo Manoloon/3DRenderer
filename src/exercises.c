@@ -15,6 +15,15 @@ void draw_grid(uint32_t color, uint8_t cellSize)
         x=0;
     }
 }
+void draw_pixel(int x, int y, uint32_t color)
+{
+    if(x > window_width || x < 0 || y > window_height || y < 0)
+    {
+        fprintf(stderr,"x and y must be lesser than window Width and height respectible and greater than 0");
+        return;
+    }
+    color_buffer[(window_width * y) + x] = color;
+}
 
 void draw_rect(int x, int y, int width, int height, uint32_t color)
 {
@@ -25,7 +34,7 @@ void draw_rect(int x, int y, int width, int height, uint32_t color)
     {
         while(currentX < width)
         {
-            color_buffer[(window_width * (currentY+y)) + (currentX+x)] = color;
+            draw_pixel(currentX+x,currentY+y,color);
             currentX++;
         }
         currentX = 0;

@@ -6,6 +6,13 @@
 
 #define N_POINTS 9*9*9
 vec3_t cube[N_POINTS];
+vec2_t projected_points[N_POINTS];
+float fov_factor = 120.0;
+vec2_t project2D(vec3_t points)
+{
+    vec2_t projected ={points.x * fov_factor,points.y * fov_factor};
+    return projected;
+}
 
 // remember 0xFFEE1100 -> 0xAA-RR-GG-BB
 bool begin_play()
@@ -67,12 +74,14 @@ void process_input(void)
 
 void draw(void)
 {
-    SDL_SetRenderDrawColor(renderer,64,64,64,255);
-    SDL_RenderClear(renderer);
-    draw_grid(0xFFFFFF00,8);
-    draw_rect(10,60,100,120,0xFF0000FF);
-    draw_rect(100,10,60,120,0xFFFF0000);
-    draw_rect(120,100,100,20,0xFF00FF00);
+    draw_grid(0xFF646464,8);
+    for(int i= 0; i < N_POINTS;i++)
+    {
+        vec2_t projected = projected_points[i];
+        draw_rect((projected.x+window_width) * 0.5,
+                (projected.y+window_height) * 0.5,
+                    4,4,0xFF00FF00);
+    }
     renderColorBuffer();
 
     clearColorBuffer(0xFF000000);
@@ -80,9 +89,13 @@ void draw(void)
 }
 
 
-void update()
+void update(void)
 {
-    //updateColorBuffer();
+    for(int i = 0; i < N_POINTS;i++)
+    {
+        vec3_t point = cube[i];
+        projected_points[i] = project2D(point);
+    }
 }
 
 int main(int argc, char* args[])
