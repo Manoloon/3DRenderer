@@ -19,7 +19,6 @@ void draw_pixel(int x, int y, uint32_t color)
 {
     if(x > window_width || x < 0 || y > window_height || y < 0)
     {
-        fprintf(stderr,"x and y must be lesser than window Width and height respectible and greater than 0");
         return;
     }
     color_buffer[(window_width * y) + x] = color;

@@ -7,10 +7,11 @@
 #define N_POINTS 9*9*9
 vec3_t cube[N_POINTS];
 vec2_t projected_points[N_POINTS];
-float fov_factor = 120.0;
+float fov_factor = 1240.0;
+vec3_t camera ={0.0,0.0,-5.0};
 vec2_t project2D(vec3_t points)
 {
-    vec2_t projected ={points.x * fov_factor,points.y * fov_factor};
+    vec2_t projected ={(points.x * fov_factor)/points.z,(points.y * fov_factor)/points.z};
     return projected;
 }
 
@@ -60,9 +61,21 @@ void process_input(void)
             is_app_running = false;
             break;
         case SDL_KEYDOWN:
-            if(event.key.keysym.sym == SDLK_ESCAPE)
+            switch (event.key.keysym.sym)
             {
+            case SDLK_ESCAPE:
                 is_app_running = false;
+                break;
+            case SDLK_w:
+                if(fov_factor < 3000)
+                    fov_factor +=1;
+                break;
+            case SDLK_s:
+                if(fov_factor > 0)
+                    fov_factor -=1;
+                break;
+            default:
+                break;
             }
             break;
         default:
@@ -91,9 +104,13 @@ void draw(void)
 
 void update(void)
 {
+    // transformation of vectors
+
+    // projection of vectors
     for(int i = 0; i < N_POINTS;i++)
     {
         vec3_t point = cube[i];
+        point.z -= camera.z;
         projected_points[i] = project2D(point);
     }
 }
