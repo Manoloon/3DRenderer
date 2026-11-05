@@ -8,6 +8,7 @@
 vec3_t cube[N_POINTS];
 vec2_t projected_points[N_POINTS];
 float fov_factor = 1240.0;
+int fov_acc = 2;
 vec3_t camera ={0.0,0.0,-5.0};
 vec2_t project2D(vec3_t points)
 {
@@ -68,11 +69,11 @@ void process_input(void)
                 break;
             case SDLK_w:
                 if(fov_factor < 3000)
-                    fov_factor +=1;
+                    fov_factor +=fov_acc;
                 break;
             case SDLK_s:
                 if(fov_factor > 0)
-                    fov_factor -=1;
+                    fov_factor -=fov_acc;
                 break;
             default:
                 break;
