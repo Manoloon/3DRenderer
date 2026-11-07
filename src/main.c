@@ -9,7 +9,11 @@ vec3_t cube[N_POINTS];
 vec2_t projected_points[N_POINTS];
 float fov_factor = 1240.0;
 int fov_acc = 2;
+float rot_x = 0.0;
+float rot_y = 0.0;
+float rot_z = 0.0;
 vec3_t camera ={0.0,0.0,-5.0};
+vec3_t obj_rotation = {0,0,0};
 vec2_t project2D(vec3_t points)
 {
     vec2_t projected ={(points.x * fov_factor)/points.z,(points.y * fov_factor)/points.z};
@@ -75,6 +79,40 @@ void process_input(void)
                 if(fov_factor > 0)
                     fov_factor -=fov_acc;
                 break;
+            case SDLK_UP:
+                if(rot_y < 0.1)
+                {
+                    rot_y +=0.001;
+                    break;
+                }
+            case SDLK_DOWN:
+                if(rot_y > -0.1)
+                {
+                    rot_y -=0.001;
+                    break;
+                }
+            case SDLK_RIGHT:
+                if(rot_x < 0.1)
+                {
+                    rot_x +=0.001;
+                    break;
+                }
+            case SDLK_LEFT:
+                if(rot_x > -0.1)
+                {
+                    rot_x -=0.001;
+                    break;
+                }
+            case SDLK_SPACE:
+                if(rot_z == 0.0)
+                {
+                    rot_z =0.005;
+                    break;
+                }
+                else
+                {
+                    rot_z = 0.0;
+                }
             default:
                 break;
             }
@@ -105,14 +143,19 @@ void draw(void)
 
 void update(void)
 {
+    obj_rotation.x += rot_x;
+    obj_rotation.y += rot_y;
+    obj_rotation.z +=rot_z;
     // transformation of vectors
-
     // projection of vectors
     for(int i = 0; i < N_POINTS;i++)
     {
         vec3_t point = cube[i];
-        point.z -= camera.z;
-        projected_points[i] = project2D(point);
+        vec3_t transform_point = vec3_rotate_x(point,obj_rotation.x);
+        transform_point = vec3_rotate_y(transform_point,obj_rotation.y);
+        transform_point = vec3_rotate_z(transform_point,obj_rotation.z);
+        transform_point.z -= camera.z;
+        projected_points[i] = project2D(transform_point);
     }
 }
 
