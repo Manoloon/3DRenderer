@@ -1,37 +1,37 @@
 [
 {
   "directory": "C:/Coding/C/3DRenderer/build",
-  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe  @CMakeFiles/3DRenderer.dir/includes_C.rsp -g -std=gnu99 -o CMakeFiles\\3DRenderer.dir\\src\\main.c.obj -c C:\\Coding\\C\\3DRenderer\\src\\main.c",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe  @CMakeFiles/3DRenderer.dir/includes_C.rsp -g -std=gnu11 -o CMakeFiles\\3DRenderer.dir\\src\\main.c.obj -c C:\\Coding\\C\\3DRenderer\\src\\main.c",
   "file": "C:/Coding/C/3DRenderer/src/main.c",
   "output": "CMakeFiles/3DRenderer.dir/src/main.c.obj"
 },
 {
   "directory": "C:/Coding/C/3DRenderer/build",
-  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe  @CMakeFiles/3DRenderer.dir/includes_C.rsp -g -std=gnu99 -o CMakeFiles\\3DRenderer.dir\\src\\mesh.c.obj -c C:\\Coding\\C\\3DRenderer\\src\\mesh.c",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe  @CMakeFiles/3DRenderer.dir/includes_C.rsp -g -std=gnu11 -o CMakeFiles\\3DRenderer.dir\\src\\mesh.c.obj -c C:\\Coding\\C\\3DRenderer\\src\\mesh.c",
   "file": "C:/Coding/C/3DRenderer/src/mesh.c",
   "output": "CMakeFiles/3DRenderer.dir/src/mesh.c.obj"
 },
 {
   "directory": "C:/Coding/C/3DRenderer/build",
-  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe  @CMakeFiles/3DRenderer.dir/includes_C.rsp -g -std=gnu99 -o CMakeFiles\\3DRenderer.dir\\src\\display.c.obj -c C:\\Coding\\C\\3DRenderer\\src\\display.c",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe  @CMakeFiles/3DRenderer.dir/includes_C.rsp -g -std=gnu11 -o CMakeFiles\\3DRenderer.dir\\src\\display.c.obj -c C:\\Coding\\C\\3DRenderer\\src\\display.c",
   "file": "C:/Coding/C/3DRenderer/src/display.c",
   "output": "CMakeFiles/3DRenderer.dir/src/display.c.obj"
 },
 {
   "directory": "C:/Coding/C/3DRenderer/build",
-  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe  @CMakeFiles/3DRenderer.dir/includes_C.rsp -g -std=gnu99 -o CMakeFiles\\3DRenderer.dir\\src\\exercises.c.obj -c C:\\Coding\\C\\3DRenderer\\src\\exercises.c",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe  @CMakeFiles/3DRenderer.dir/includes_C.rsp -g -std=gnu11 -o CMakeFiles\\3DRenderer.dir\\src\\exercises.c.obj -c C:\\Coding\\C\\3DRenderer\\src\\exercises.c",
   "file": "C:/Coding/C/3DRenderer/src/exercises.c",
   "output": "CMakeFiles/3DRenderer.dir/src/exercises.c.obj"
 },
 {
   "directory": "C:/Coding/C/3DRenderer/build",
-  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe  @CMakeFiles/3DRenderer.dir/includes_C.rsp -g -std=gnu99 -o CMakeFiles\\3DRenderer.dir\\src\\globals.c.obj -c C:\\Coding\\C\\3DRenderer\\src\\globals.c",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe  @CMakeFiles/3DRenderer.dir/includes_C.rsp -g -std=gnu11 -o CMakeFiles\\3DRenderer.dir\\src\\globals.c.obj -c C:\\Coding\\C\\3DRenderer\\src\\globals.c",
   "file": "C:/Coding/C/3DRenderer/src/globals.c",
   "output": "CMakeFiles/3DRenderer.dir/src/globals.c.obj"
 },
 {
   "directory": "C:/Coding/C/3DRenderer/build",
-  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe  @CMakeFiles/3DRenderer.dir/includes_C.rsp -g -std=gnu99 -o CMakeFiles\\3DRenderer.dir\\src\\vector.c.obj -c C:\\Coding\\C\\3DRenderer\\src\\vector.c",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe  @CMakeFiles/3DRenderer.dir/includes_C.rsp -g -std=gnu11 -o CMakeFiles\\3DRenderer.dir\\src\\vector.c.obj -c C:\\Coding\\C\\3DRenderer\\src\\vector.c",
   "file": "C:/Coding/C/3DRenderer/src/vector.c",
   "output": "CMakeFiles/3DRenderer.dir/src/vector.c.obj"
 }

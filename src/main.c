@@ -12,6 +12,9 @@ int fov_acc = 2;
 float rot_x = 0.0;
 float rot_y = 0.0;
 float rot_z = 0.0;
+static int mouse_x;
+static int mouse_y;
+static bool left_click;
 uint32_t prev_frame_time = 0;
 
 vec3_t camera ={0.0,0.0,-5.0};
@@ -57,7 +60,7 @@ bool begin_play()
     return true;
 }
 
-void process_input(void)
+int process_input(void)
 {
     SDL_Event event;
     while (SDL_PollEvent(&event))
@@ -66,61 +69,56 @@ void process_input(void)
         {
         case SDL_QUIT:
             is_app_running = false;
-            break;
+            return 0;
         case SDL_KEYDOWN:
             switch (event.key.keysym.sym)
             {
-            case SDLK_ESCAPE:
-                is_app_running = false;
-                break;
-            case SDLK_w:
-                if(fov_factor < 3000)
-                    fov_factor +=fov_acc;
-                break;
-            case SDLK_s:
-                if(fov_factor > 0)
-                    fov_factor -=fov_acc;
-                break;
-            case SDLK_UP:
-                if(rot_y < 0.1)
-                {
-                    rot_y +=0.001;
-                    break;
-                }
-            case SDLK_DOWN:
-                if(rot_y > -0.1)
-                {
-                    rot_y -=0.001;
-                    break;
-                }
-            case SDLK_RIGHT:
-                if(rot_x < 0.1)
-                {
-                    rot_x +=0.001;
-                    break;
-                }
-            case SDLK_LEFT:
-                if(rot_x > -0.1)
-                {
-                    rot_x -=0.001;
-                    break;
-                }
-            case SDLK_SPACE:
-                if(rot_z == 0.0)
-                {
-                    rot_z =0.005;
-                    break;
-                }
-                else
-                {
-                    rot_z = 0.0;
-                }
-            default:
-                break;
+                case SDLK_ESCAPE:
+                    is_app_running = false;
+                    return 0;
+                case SDLK_w:
+                    if(fov_factor < 3000)
+                        fov_factor +=fov_acc;
+                    return 0;
+                case SDLK_s:
+                    if(fov_factor > 0)
+                        fov_factor -=fov_acc;
+                    return 0;
+                case SDLK_UP:
+                    if(rot_y < 0.1)
+                        rot_y +=0.001;
+                    return 0;
+                case SDLK_DOWN:
+                    if(rot_y > -0.1)
+                        rot_y -=0.001;
+                    return 0;
+                case SDLK_RIGHT:
+                    if(rot_x < 0.1)
+                        rot_x +=0.001;
+                    return 0;
+                case SDLK_LEFT:
+                    if(rot_x > -0.1)
+                        rot_x -=0.001;
+                    return 0;
+                case SDLK_SPACE:
+                    rot_z = rot_z == 0.0 ? 0.005 : 0.0; 
+                    return 0;
+                case SDL_MOUSEMOTION:
+                    mouse_x = event.motion.x;
+                    mouse_y = event.motion.y;
+                    return 0;
+                case SDL_MOUSEBUTTONDOWN:
+                    left_click = true;
+                    return 0;
+                case SDL_MOUSEBUTTONUP:
+                    left_click = false;
+                    return 0;
+                default:
+                    return 0;
             }
-            break;
+            return 0;
         default:
-            break;
+            return 0;
         }
     }
 }
