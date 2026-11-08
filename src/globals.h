@@ -5,6 +5,9 @@
 #include <stdbool.h>
 #include "vector.h"
 
+#define FPS 60
+#define FRAME_TARGET_TIME (1000/FPS)
+
 // TODO : all of these to config ini file
 extern bool is_app_running;
 extern bool is_fullScreen;

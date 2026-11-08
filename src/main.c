@@ -12,6 +12,8 @@ int fov_acc = 2;
 float rot_x = 0.0;
 float rot_y = 0.0;
 float rot_z = 0.0;
+uint32_t prev_frame_time = 0;
+
 vec3_t camera ={0.0,0.0,-5.0};
 vec3_t obj_rotation = {0,0,0};
 vec2_t project2D(vec3_t points)
@@ -142,10 +144,11 @@ void draw(void)
 
 
 void update(void)
-{
+{  
+    prev_frame_time = SDL_GetTicks();
     obj_rotation.x += rot_x;
     obj_rotation.y += rot_y;
-    obj_rotation.z +=rot_z;
+    obj_rotation.z += rot_z;
     // transformation of vectors
     // projection of vectors
     for(int i = 0; i < N_POINTS;i++)
@@ -169,6 +172,11 @@ int main(int argc, char* args[])
 
     while(is_app_running)
     {
+        int time_to_wait = FRAME_TARGET_TIME - (SDL_GetTicks() + prev_frame_time);
+        if(time_to_wait > 0 && time_to_wait <= FRAME_TARGET_TIME)
+        {
+            SDL_Delay(time_to_wait);
+        }
         process_input();
         update();
         draw();
