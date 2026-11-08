@@ -1,6 +1,6 @@
 # 3D renderer : Pikuma course
 
-using SDL2 and ImGui 
+using SDL2 
 
 C11
 
