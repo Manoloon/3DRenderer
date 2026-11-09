@@ -13,8 +13,17 @@ typedef struct
     float y;
     float z;
 }vec3_t;
+
+typedef struct
+{
+    int a;
+    int b;
+    int c;
+}face_t;
+
 vec3_t vec3_add(vec3_t a , vec3_t b);
 vec3_t vec3_rotate_x(vec3_t vec,float angle);
 vec3_t vec3_rotate_y(vec3_t vec,float angle);
 vec3_t vec3_rotate_z(vec3_t vec,float angle);
+
 #endif

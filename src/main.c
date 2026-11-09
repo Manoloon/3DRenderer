@@ -4,33 +4,22 @@
 #include "globals.h"
 #include "vector.h"
 
-#define N_POINTS 9*9*9
-vec3_t cube[N_POINTS];
-vec2_t projected_points[N_POINTS];
 float fov_factor = 1240.0;
 int fov_acc = 2;
-float rot_x = 0.0;
-float rot_y = 0.0;
-float rot_z = 0.0;
+vec3_t rotation_speed = {0.0,0.0,0.0};
 static int mouse_x;
 static int mouse_y;
 static bool left_click;
 uint32_t prev_frame_time = 0;
 
 vec3_t camera ={0.0,0.0,-5.0};
-vec3_t obj_rotation = {0,0,0};
-vec2_t project2D(vec3_t points)
-{
-    vec2_t projected ={(points.x * fov_factor)/points.z,(points.y * fov_factor)/points.z};
-    return projected;
-}
 
 // remember 0xFFEE1100 -> 0xAA-RR-GG-BB
 bool begin_play()
 {
     color_buffer = (uint32_t*)malloc(sizeof(uint32_t) * window_width * window_height);
     if(color_buffer == NULL)
-    {
+    {;
         fprintf(stderr,"Failed to allocate memory for the color buffer\n");
         return false;
     }
@@ -45,18 +34,7 @@ bool begin_play()
     }
 
     // cube
-    int point_count =0;
-    for(float x = -1.0; x <= 1; x +=0.25)
-    {
-        for(float y = -1.0; y <= 1; y +=0.25)
-        {
-            for(float z = -1.0; z <= 1; z +=0.25)
-            {
-                vec3_t new_point={x,y,z};
-                cube[point_count++] = new_point;
-            }
-        }
-    }
+    create_vertex_cube();
     return true;
 }
 
@@ -85,23 +63,23 @@ int process_input(void)
                         fov_factor -=fov_acc;
                     return 0;
                 case SDLK_UP:
-                    if(rot_y < 0.1)
-                        rot_y +=0.001;
+                    if(rotation_speed.y < 0.1)
+                        rotation_speed.y +=0.001;
                     return 0;
                 case SDLK_DOWN:
-                    if(rot_y > -0.1)
-                        rot_y -=0.001;
+                    if(rotation_speed.y > -0.1)
+                        rotation_speed.y -=0.001;
                     return 0;
                 case SDLK_RIGHT:
-                    if(rot_x < 0.1)
-                        rot_x +=0.001;
+                    if(rotation_speed.x < 0.1)
+                        rotation_speed.x +=0.001;
                     return 0;
                 case SDLK_LEFT:
-                    if(rot_x > -0.1)
-                        rot_x -=0.001;
+                    if(rotation_speed.x > -0.1)
+                        rotation_speed.x -=0.001;
                     return 0;
                 case SDLK_SPACE:
-                    rot_z = rot_z == 0.0 ? 0.005 : 0.0; 
+                    rotation_speed.z = rotation_speed.z == 0.0 ? 0.005 : 0.0; 
                     return 0;
                 case SDL_MOUSEMOTION:
                     mouse_x = event.motion.x;
@@ -123,17 +101,10 @@ int process_input(void)
     }
 }
 
-
 void draw(void)
 {
     draw_grid(0xFF646464,8);
-    for(int i= 0; i < N_POINTS;i++)
-    {
-        vec2_t projected = projected_points[i];
-        draw_rect((projected.x+window_width) * 0.5,
-                (projected.y+window_height) * 0.5,
-                    4,4,0xFF00FF00);
-    }
+    draw_vertex_cube();
     renderColorBuffer();
 
     clearColorBuffer(0xFF000000);
@@ -144,20 +115,7 @@ void draw(void)
 void update(void)
 {  
     prev_frame_time = SDL_GetTicks();
-    obj_rotation.x += rot_x;
-    obj_rotation.y += rot_y;
-    obj_rotation.z += rot_z;
-    // transformation of vectors
-    // projection of vectors
-    for(int i = 0; i < N_POINTS;i++)
-    {
-        vec3_t point = cube[i];
-        vec3_t transform_point = vec3_rotate_x(point,obj_rotation.x);
-        transform_point = vec3_rotate_y(transform_point,obj_rotation.y);
-        transform_point = vec3_rotate_z(transform_point,obj_rotation.z);
-        transform_point.z -= camera.z;
-        projected_points[i] = project2D(transform_point);
-    }
+    update_vertex_cube(fov_factor,rotation_speed,camera);
 }
 
 int main(int argc, char* args[])
