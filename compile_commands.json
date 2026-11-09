@@ -34,5 +34,11 @@
   "command": "C:\\msys64\\mingw64\\bin\\gcc.exe  @CMakeFiles/3DRenderer.dir/includes_C.rsp -g -std=gnu11 -o CMakeFiles\\3DRenderer.dir\\src\\vector.c.obj -c C:\\Coding\\C\\3DRenderer\\src\\vector.c",
   "file": "C:/Coding/C/3DRenderer/src/vector.c",
   "output": "CMakeFiles/3DRenderer.dir/src/vector.c.obj"
+},
+{
+  "directory": "C:/Coding/C/3DRenderer/build",
+  "command": "C:\\msys64\\mingw64\\bin\\gcc.exe  @CMakeFiles/3DRenderer.dir/includes_C.rsp -g -std=gnu11 -o CMakeFiles\\3DRenderer.dir\\src\\triangle.c.obj -c C:\\Coding\\C\\3DRenderer\\src\\triangle.c",
+  "file": "C:/Coding/C/3DRenderer/src/triangle.c",
+  "output": "CMakeFiles/3DRenderer.dir/src/triangle.c.obj"
 }
 ]
