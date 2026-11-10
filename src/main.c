@@ -1,4 +1,7 @@
 #include <SDL2/sdl.h>
+//#define RAYGUI_IMPLEMENTATION
+//#include "raygui.h"
+
 #include "display.h"
 #include "exercises.h"
 #include "globals.h"

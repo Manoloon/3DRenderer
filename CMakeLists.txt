@@ -14,7 +14,8 @@ add_executable(3DRenderer src/main.c src/mesh.c
     src/vector.c src/triangle.c)
 
 # Include SDL2 headers
-target_include_directories(3DRenderer PRIVATE ${SDL2_INCLUDE_DIRS})
+target_include_directories(3DRenderer PRIVATE ${SDL2_INCLUDE_DIRS}
+                            ${CMAKE_CURRENT_SOURCE_DIR}/External)
 
 # Link SDL2 library
 target_link_libraries(3DRenderer PRIVATE ${SDL2_LIBRARIES})
