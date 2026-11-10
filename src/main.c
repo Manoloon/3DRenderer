@@ -119,6 +119,7 @@ void update(void)
 {  
     prev_frame_time = SDL_GetTicks();
     update_vertex_cube(fov_factor,rotation_speed,camera);
+    //// mesh and vertices
 }
 
 int main(int argc, char* args[])
