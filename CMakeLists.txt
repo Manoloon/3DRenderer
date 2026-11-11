@@ -11,7 +11,7 @@ find_package(SDL2 REQUIRED)
 # Add the executable target
 add_executable(3DRenderer src/main.c src/mesh.c
     src/display.c src/exercises.c src/globals.c
-    src/vector.c src/triangle.c)
+    src/vector.c src/triangle.c src/gui.c)
 
 # Include SDL2 headers
 target_include_directories(3DRenderer PRIVATE ${SDL2_INCLUDE_DIRS}

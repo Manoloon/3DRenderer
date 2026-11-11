@@ -1,12 +1,10 @@
 #include <SDL2/sdl.h>
-//#define RAYGUI_IMPLEMENTATION
-//#include "raygui.h"
-
 #include "display.h"
 #include "exercises.h"
 #include "mesh.h"
 #include "globals.h"
 #include "vector.h"
+#include "gui.h"
 
 float fov_factor = 1240.0;
 int fov_acc = 2;
@@ -37,7 +35,6 @@ bool begin_play()
         fprintf(stderr,"FAILED to construct the color buffer texture\n");
         return false;
     }
-
     // cube
     create_vertex_cube();
     return true;
@@ -48,6 +45,9 @@ int process_input(void)
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
+        // Gui
+        gui_process_event(&event);
+
         switch (event.type)
         {
         case SDL_QUIT:
@@ -123,6 +123,9 @@ void draw(void)
     draw_mesh();
     renderColorBuffer();
 
+    // Gui
+    gui_end();
+
     clearColorBuffer(0xFF000000);
     SDL_RenderPresent(renderer);
 }
@@ -142,7 +145,7 @@ int main(int argc, char* args[])
     {
         is_app_running = false;
     }
-
+    gui_init(window,renderer);
     while(is_app_running)
     {
         int time_to_wait = FRAME_TARGET_TIME - (SDL_GetTicks() + prev_frame_time);
@@ -150,10 +153,15 @@ int main(int argc, char* args[])
         {
             SDL_Delay(time_to_wait);
         }
+        // GUi
+        gui_begin();
+
         process_input();
+        gui_build();
         update();
         draw();
     }
+    gui_shutdown();
     destroy_window();
     return 0;
 }

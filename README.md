@@ -1,6 +1,8 @@
 # 3D renderer : Pikuma course
 
-using SDL2 
+SDL2 como Window y Renderer
+Nuklear : GUI
+
 
 C11
 
