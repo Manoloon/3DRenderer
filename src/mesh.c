@@ -1,7 +1,9 @@
 #include "mesh.h"
 #include "exercises.h"
 #include "triangle.h"
+#include "globals.h"
 
+vec3_t mesh_rotation = {0.0,0.0,0.0};
 vec3_t mesh_vertices[N_MESH_VERTICES]=
 {
     {.x = -1, .y = -1, .z = -1}, // 1
@@ -36,8 +38,16 @@ face_t mesh_faces[N_MESH_FACES]=
     {.a = 6, .b = 1, .c = 4}
 };
 triangle_t triangles_to_render[N_MESH_FACES];
-void update_mesh(float delta_time)
+void create_mesh(void)
 {
+
+}
+void update_mesh(float delta_time,vec2_t position,float FOV, vec3_t rot_speed,vec3_t camera)
+{
+    mesh_rotation.x += rot_speed.x;
+    mesh_rotation.y += rot_speed.y;
+    mesh_rotation.z += rot_speed.z;
+
     for(int i = 0; i < N_MESH_FACES;i++)
     {
         face_t current_face = mesh_faces[i];
@@ -51,13 +61,13 @@ void update_mesh(float delta_time)
         for(int j = 0; j < 3;j++)
         {
             vec3_t transform_vertex = face_vertices[j];
-            transform_vertex = vec3_rotate_x(transform_vertex,);
-            transform_vertex = vec3_rotate_y(transform_vertex,);
-            transform_vertex = vec3_rotate_z(transform_vertex,);
+            transform_vertex = vec3_rotate_x(transform_vertex,mesh_rotation.x);
+            transform_vertex = vec3_rotate_y(transform_vertex,mesh_rotation.y);
+            transform_vertex = vec3_rotate_z(transform_vertex,mesh_rotation.z);
             transform_vertex.z -= camera.z;
-            vec2_t projected_point = project2D(160,transform_vertex);
-            projected_point.x += (window_w /2);
-            projected_point.y += (window_h /2);
+            vec2_t projected_point = project2D(FOV,transform_vertex);
+            projected_point.x += position.x;
+            projected_point.y += position.y;
             projected_triangle.points[j] = projected_point;
         }
         triangles_to_render[i] = projected_triangle;

@@ -4,18 +4,20 @@
 
 #include "display.h"
 #include "exercises.h"
+#include "mesh.h"
 #include "globals.h"
 #include "vector.h"
 
 float fov_factor = 1240.0;
 int fov_acc = 2;
 vec3_t rotation_speed = {0.0,0.0,0.0};
+vec2_t world_position ={100,240};
 static int mouse_x;
 static int mouse_y;
 static bool left_click;
 uint32_t prev_frame_time = 0;
 
-vec3_t camera ={0.0,0.0,-5.0};
+vec3_t camera ={0.0,0.0,-15.0};
 
 // remember 0xFFEE1100 -> 0xAA-RR-GG-BB
 bool begin_play()
@@ -58,12 +60,22 @@ int process_input(void)
                     is_app_running = false;
                     return 0;
                 case SDLK_w:
-                    if(fov_factor < 3000)
-                        fov_factor +=fov_acc;
+                    if(world_position.y < window_height)
+                        world_position.y +=1;
                     return 0;
                 case SDLK_s:
-                    if(fov_factor > 0)
-                        fov_factor -=fov_acc;
+                    //if(fov_factor > 0)
+                      //  fov_factor -=fov_acc;
+                    if(world_position.y > 0)
+                        world_position.y -=1;
+                    return 0;
+                case SDLK_a:
+                    if(world_position.x > 0)
+                        world_position.x-=1;
+                    return 0;
+                case SDLK_d:
+                    if(world_position.x < window_width)
+                        world_position.x +=1;
                     return 0;
                 case SDLK_UP:
                     if(rotation_speed.y < 0.1)
@@ -90,6 +102,8 @@ int process_input(void)
                     return 0;
                 case SDL_MOUSEBUTTONDOWN:
                     left_click = true;
+                    if(fov_factor < 3000)
+                        fov_factor +=fov_acc;
                     return 0;
                 case SDL_MOUSEBUTTONUP:
                     left_click = false;
@@ -97,9 +111,6 @@ int process_input(void)
                 default:
                     return 0;
             }
-            return 0;
-        default:
-            return 0;
         }
     }
 }
@@ -107,7 +118,9 @@ int process_input(void)
 void draw(void)
 {
     draw_grid(0xFF646464,8);
-    draw_vertex_cube();
+    vec2_t newPos = {(window_width/2)+200,window_height/2};
+    draw_vertex_cube(newPos);
+    draw_mesh();
     renderColorBuffer();
 
     clearColorBuffer(0xFF000000);
@@ -119,7 +132,7 @@ void update(void)
 {  
     prev_frame_time = SDL_GetTicks();
     update_vertex_cube(fov_factor,rotation_speed,camera);
-    //// mesh and vertices
+    update_mesh(0.016,world_position,fov_factor,rotation_speed,camera);
 }
 
 int main(int argc, char* args[])

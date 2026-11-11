@@ -48,7 +48,7 @@ vec2_t project2D(float FOV,vec3_t points)
     return projected;
 }
 
-void create_vertex_cube() 
+void create_vertex_cube(void) 
 {
     int point_count =0;
     for(float x = -1.0; x <= 1; x +=0.25)
@@ -64,13 +64,12 @@ void create_vertex_cube()
     }
 }
 
-void draw_vertex_cube() 
+void draw_vertex_cube(vec2_t position) 
 {
     for(int i= 0; i < N_POINTS;i++)
     {
         vec2_t projected = projected_points[i];
-        draw_rect((projected.x+window_width) * 0.5,
-                (projected.y+window_height) * 0.5,
+        draw_rect(projected.x+position.x,projected.y+position.y,
                     4,4,0xFF00FF00);
     }
 }
