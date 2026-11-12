@@ -82,5 +82,42 @@ void draw_mesh(void)
         draw_rect(triangle.points[0].x,triangle.points[0].y,3,3,0xFF00FFFF);
         draw_rect(triangle.points[1].x,triangle.points[1].y,3,3,0xFF00FFFF);
         draw_rect(triangle.points[2].x,triangle.points[2].y,3,3,0xFF00FFFF);
+        draw_line_DDA(
+                triangle.points[0].x,
+                triangle.points[0].y,
+                triangle.points[1].x,
+                triangle.points[1].y,
+                0xFFFF0000);
+        draw_line_DDA(
+                triangle.points[1].x,
+                triangle.points[1].y,
+                triangle.points[2].x,
+                triangle.points[2].y,
+                0xFFFF0000);
+        draw_line_DDA(
+                triangle.points[2].x,
+                triangle.points[2].y,
+                triangle.points[0].x,
+                triangle.points[0].y,
+                0xFFFF0000);
+    }
+}
+
+void draw_line_DDA(int x1, int y1, int x2, int y2, uint32_t color)
+{
+    int delta_x = x2 - x1;
+    int delta_y = y2 - y1;
+
+    int x_length = abs(delta_x) >= abs(delta_y) ? abs(delta_x) : abs(delta_y);
+    float x_inc = delta_x / (float) x_length;
+    float y_inc = delta_y / (float) x_length;
+
+    int current_x = x1;
+    int current_y = y1;
+    for( int i = 0; i < delta_x; i++)
+    {
+        draw_pixel((int)round(current_x),(int)round(current_y),color);
+        current_x += x_inc;
+        current_y += y_inc;
     }
 }

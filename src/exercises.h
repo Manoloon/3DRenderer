@@ -9,7 +9,7 @@ void draw_grid(uint32_t color,uint8_t cellSize);
 /// pos x, pos y, width , height , color
 void draw_rect(int x,int y, int width, int height, uint32_t color);
 vec2_t project2D(float FOV, vec3_t points);
-
+void draw_pixel(int x, int y, uint32_t color);
 // vertex cube
 #define N_POINTS 9*9*9
 extern vec3_t cube[N_POINTS];
