@@ -10,16 +10,16 @@
 // use for(int i = 0 ; i < ARRAY_LENGTH(arr); i++)
 #define ARRAY_LENGTH(x) (sizeof(x)/sizeof(x[0]))
 
-float fov_factor = 1240.0;
+float fov_factor = 640.0;
 int fov_acc = 2;
 vec3_t rotation_speed = {0.0,0.0,0.0};
-vec2_t world_position ={100,240};
+vec2_t world_position ={150,240};
 static int mouse_x;
 static int mouse_y;
 static bool left_click;
 uint32_t prev_frame_time = 0;
 
-vec3_t camera ={0.0,0.0,-15.0};
+vec3_t camera ={0.0,0.0,-10.0};
 
 // remember 0xFFEE1100 -> 0xAA-RR-GG-BB
 bool begin_play()
@@ -64,14 +64,10 @@ int process_input(void)
                     is_app_running = false;
                     return 0;
                 case SDLK_w:
-                    if(world_position.y < window_height)
-                        world_position.y +=1;
+                    camera.z += 0.1;
                     return 0;
                 case SDLK_s:
-                    //if(fov_factor > 0)
-                      //  fov_factor -=fov_acc;
-                    if(world_position.y > 0)
-                        world_position.y -=1;
+                    camera.z -= 0.1;
                     return 0;
                 case SDLK_a:
                     if(world_position.x > 0)
@@ -122,7 +118,7 @@ int process_input(void)
 void draw(void)
 {
     draw_grid(0xFF646464,8);
-    vec2_t newPos = {(window_width/2)+200,window_height/2};
+    vec2_t newPos = {window_width-200,window_height/2};
     draw_vertex_cube(newPos);
     draw_mesh();
     renderColorBuffer();
