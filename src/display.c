@@ -10,14 +10,8 @@ bool init_window()
         return false;
     }
 
-    SDL_DisplayMode display_mode;
-    if(is_fullScreen)
-    {
-        SDL_GetCurrentDisplayMode(0,&display_mode);
-        window_width = display_mode.w;
-        window_height = display_mode.h;
-    }
-
+    setFullScreen();
+    
     window = SDL_CreateWindow(NULL,
                         SDL_WINDOWPOS_CENTERED,
                         SDL_WINDOWPOS_CENTERED,
@@ -81,4 +75,15 @@ void renderColorBuffer()
                     color_buffer_texture,
                     NULL,
                     NULL);
+}
+
+void setFullScreen(void)
+{
+    SDL_DisplayMode display_mode;
+    if(is_fullScreen)
+    {
+        SDL_GetCurrentDisplayMode(0,&display_mode);
+        window_width = display_mode.w;
+        window_height = display_mode.h;
+    }
 }

@@ -6,6 +6,10 @@
 #include "vector.h"
 #include "gui.h"
 
+// the best approach to get the length dynamically
+// use for(int i = 0 ; i < ARRAY_LENGTH(arr); i++)
+#define ARRAY_LENGTH(x) (sizeof(x)/sizeof(x[0]))
+
 float fov_factor = 1240.0;
 int fov_acc = 2;
 vec3_t rotation_speed = {0.0,0.0,0.0};

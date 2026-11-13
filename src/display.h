@@ -7,7 +7,7 @@ void destroy_window();
 
 // color buffer
 void clearColorBuffer(uint32_t color);
-void updateColorBuffer();
-void renderColorBuffer();
-
+void updateColorBuffer(void);
+void renderColorBuffer(void);
+void setFullScreen(void);
 #endif

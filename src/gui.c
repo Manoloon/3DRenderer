@@ -12,6 +12,7 @@
 #include "nuklear_sdl_renderer.h"
 
 #include "gui.h"
+#include "globals.h"
 #include <string.h>
 
 static struct nk_context* ctx = NULL;
@@ -36,7 +37,7 @@ bool gui_init(SDL_Window* window,SDL_Renderer* renderer)
     struct nk_font* font;
 
     nk_sdl_font_stash_begin(&atlas);
-    font = nk_font_atlas_add_default(atlas,13 * 10.0f,&config);
+    font = nk_font_atlas_add_default(atlas,10.0f,&config);
     nk_sdl_font_stash_end();
     nk_style_set_font(ctx, &font->handle);
     initialized = true;
@@ -70,16 +71,18 @@ void gui_build(void)
                 NK_WINDOW_SCALABLE))
         {
             nk_layout_row_dynamic(ctx,30,1);
-            nk_label(ctx,"GUI NUKLEAR",NK_TEXT_LEFT);
+            nk_label(ctx,"Settings",NK_TEXT_LEFT);
             if(nk_button_label(ctx,"yo el boton"))
             {
                 SDL_Log("button pressed");
             }
-            static int enabled = 0;
-            nk_checkbox_label(ctx,"enable feature",&enabled);
-            static float value = 0.5f;
+            //static int enabled = 0;
+            nk_checkbox_label(ctx,"FullScreen",&is_fullScreen);
+
             nk_layout_row_dynamic(ctx,25,1);
-            nk_slide_float(ctx,0.0f,value,1.0f,0.01f);
+            nk_label(ctx,"FOV",3);
+            static float fov = 0.5;
+            nk_slider_float(ctx,0.f,&fov,1.f,0.01f);
         }
         nk_end(ctx);
 }

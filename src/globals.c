@@ -1,7 +1,7 @@
 #include "globals.h"
 
 bool is_app_running = false;
-bool is_fullScreen = false;
+int is_fullScreen = false;
 uint32_t window_width = 640;
 uint32_t window_height = 480;
 SDL_Window* window = NULL;
