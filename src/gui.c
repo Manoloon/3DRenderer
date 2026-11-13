@@ -64,7 +64,7 @@ void gui_build(void)
         return;
     
     if(nk_begin(ctx,"3D Renderer",
-                nk_rect(50,50,350,250),
+                nk_rect(window_width-150,0,150,150),
                 NK_WINDOW_BORDER | 
                 NK_WINDOW_MOVABLE |
                 NK_WINDOW_TITLE |

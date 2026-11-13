@@ -2,7 +2,6 @@
 #define MESH_H
 #include "vector.h"
 #include "triangle.h"
-#include <stdint.h>
 
 // Mesh and vertices
 #define N_MESH_VERTICES 8
@@ -14,5 +13,5 @@ extern triangle_t triangles_to_render[N_MESH_FACES];
 void create_mesh(void);
 void update_mesh(float delta_time,vec2_t position,float FOV, vec3_t rot_speed,vec3_t camera);
 void draw_mesh(void);
-void draw_line_DDA(int x1,int y1, int x2,int y2,uint32_t color);
+
 #endif

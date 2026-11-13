@@ -1,52 +1,9 @@
 #include "exercises.h"
 #include "globals.h"
+#include "display.h"
 vec3_t cube[N_POINTS];
 vec2_t projected_points[N_POINTS];
 vec3_t obj_rotation = {0,0,0};
-void draw_grid(uint32_t color, uint8_t cellSize)
-{
-    if(cellSize < 1) return;
-    int x = 0;
-    for(int y = 0; y < window_height;y+=cellSize)
-    {
-        while(x < window_width)
-        {
-            color_buffer[(window_width * y) + x] = color;
-            x+=cellSize;
-        }
-        x=0;
-    }
-}
-void draw_pixel(int x, int y, uint32_t color)
-{
-    if(x > window_width || x < 0 || y > window_height || y < 0)
-    {
-        return;
-    }
-    color_buffer[(window_width * y) + x] = color;
-}
-
-void draw_rect(int x, int y, int width, int height, uint32_t color)
-{
-    if(x > window_width || x < 0) return;
-    if(y > window_height || y < 0) return;
-    int currentX =0;
-    for(int currentY=0; currentY < height; currentY++)
-    {
-        while(currentX < width)
-        {
-            draw_pixel(currentX+x,currentY+y,color);
-            currentX++;
-        }
-        currentX = 0;
-    }
-}
-
-vec2_t project2D(float FOV,vec3_t points) 
-{
-    vec2_t projected ={(points.x * FOV)/points.z,(points.y * FOV)/points.z};
-    return projected;
-}
 
 void create_vertex_cube(void) 
 {

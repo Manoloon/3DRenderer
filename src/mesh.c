@@ -1,4 +1,5 @@
 #include "mesh.h"
+#include "display.h"
 #include "exercises.h"
 #include "triangle.h"
 #include "globals.h"
@@ -16,26 +17,27 @@ vec3_t mesh_vertices[N_MESH_VERTICES]=
     {.x = -1, .y = -1, .z =  1}, // 8
 };
 
+// the numbers are the index .. maybe should start with 0;
 face_t mesh_faces[N_MESH_FACES]=
 {
     // front
-    {.a = 1, .b = 2, .c = 3},
-    {.a = 1, .b = 3, .c = 4},
+    {.a = 0, .b = 1, .c = 2},
+    {.a = 0, .b = 2, .c = 3},
     // right
-    {.a = 4, .b = 3, .c = 5},
-    {.a = 4, .b = 5, .c = 6},
+    {.a = 3, .b = 2, .c = 4},
+    {.a = 3, .b = 4, .c = 5},
     // back
-    {.a = 6, .b = 5, .c = 7},
-    {.a = 6, .b = 7, .c = 8},
+    {.a = 5, .b = 4, .c = 6},
+    {.a = 5, .b = 6, .c = 7},
     // left
-    {.a = 8, .b = 7, .c = 2},
-    {.a = 8, .b = 2, .c = 1},
+    {.a = 7, .b = 6, .c = 1},
+    {.a = 7, .b = 1, .c = 0},
     // top
-    {.a = 2, .b = 7, .c = 5},
-    {.a = 2, .b = 5, .c = 3},
+    {.a = 1, .b = 6, .c = 4},
+    {.a = 1, .b = 4, .c = 2},
     // botton
-    {.a = 6, .b = 8, .c = 1},
-    {.a = 6, .b = 1, .c = 4}
+    {.a = 5, .b = 7, .c = 0},
+    {.a = 5, .b = 0, .c = 3}
 };
 triangle_t triangles_to_render[N_MESH_FACES];
 void create_mesh(void)
@@ -52,9 +54,10 @@ void update_mesh(float delta_time,vec2_t position,float FOV, vec3_t rot_speed,ve
     {
         face_t current_face = mesh_faces[i];
         vec3_t face_vertices[3];
-        face_vertices[0] = mesh_vertices[current_face.a -1]; 
-        face_vertices[1] = mesh_vertices[current_face.b -1]; 
-        face_vertices[2] = mesh_vertices[current_face.c -1];
+
+        face_vertices[0] = mesh_vertices[current_face.a]; 
+        face_vertices[1] = mesh_vertices[current_face.b]; 
+        face_vertices[2] = mesh_vertices[current_face.c];
 
         triangle_t projected_triangle;
         
@@ -79,45 +82,11 @@ void draw_mesh(void)
     for(int i = 0; i < N_MESH_FACES;i++)
     {
         triangle_t triangle = triangles_to_render[i];
-        draw_rect(triangle.points[0].x,triangle.points[0].y,3,3,0xFF00FFFF);
-        draw_rect(triangle.points[1].x,triangle.points[1].y,3,3,0xFF00FFFF);
+        draw_rect(triangle.points[0].x,triangle.points[0].y,10,10,0xFFFF0000);
+        draw_rect(triangle.points[1].x,triangle.points[1].y,5,5,0xFFFF00FF);
         draw_rect(triangle.points[2].x,triangle.points[2].y,3,3,0xFF00FFFF);
-        draw_line_DDA(
-                triangle.points[0].x,
-                triangle.points[0].y,
-                triangle.points[1].x,
-                triangle.points[1].y,
-                0xFFFF0000);
-        draw_line_DDA(
-                triangle.points[1].x,
-                triangle.points[1].y,
-                triangle.points[2].x,
-                triangle.points[2].y,
-                0xFFFF0000);
-        draw_line_DDA(
-                triangle.points[2].x,
-                triangle.points[2].y,
-                triangle.points[0].x,
-                triangle.points[0].y,
-                0xFFFF0000);
-    }
-}
-
-void draw_line_DDA(int x1, int y1, int x2, int y2, uint32_t color)
-{
-    int delta_x = x2 - x1;
-    int delta_y = y2 - y1;
-
-    int x_length = abs(delta_x) >= abs(delta_y) ? abs(delta_x) : abs(delta_y);
-    float x_inc = delta_x / (float) x_length;
-    float y_inc = delta_y / (float) x_length;
-
-    int current_x = x1;
-    int current_y = y1;
-    for( int i = 0; i < delta_x; i++)
-    {
-        draw_pixel((int)round(current_x),(int)round(current_y),color);
-        current_x += x_inc;
-        current_y += y_inc;
+        draw_triangle(triangle.points[0].x,triangle.points[0].y,
+                        triangle.points[1].x,triangle.points[1].y,
+                        triangle.points[2].x,triangle.points[2].y,0xFFFF0000);
     }
 }
