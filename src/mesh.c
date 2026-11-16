@@ -39,17 +39,20 @@ face_t mesh_faces[N_MESH_FACES]=
     {.a = 5, .b = 7, .c = 0},
     {.a = 5, .b = 0, .c = 3}
 };
+// TODO : dynarray
+// dynarray_t* triangles_to_render = NULL;
 triangle_t triangles_to_render[N_MESH_FACES];
 void create_mesh(void)
 {
-
+    // dyn_init(triangles_to_render,sizeof(triangle_t));
 }
 void update_mesh(float delta_time,vec2_t position,float FOV, vec3_t rot_speed,vec3_t camera)
 {
     mesh_rotation.x += rot_speed.x;
     mesh_rotation.y += rot_speed.y;
     mesh_rotation.z += rot_speed.z;
-
+    // TODO : dynarray reset
+    // dynarray_free(triangles_to_render);
     for(int i = 0; i < N_MESH_FACES;i++)
     {
         face_t current_face = mesh_faces[i];
@@ -73,14 +76,19 @@ void update_mesh(float delta_time,vec2_t position,float FOV, vec3_t rot_speed,ve
             projected_point.y += position.y;
             projected_triangle.points[j] = projected_point;
         }
+        // TODO : pushback projected_triangle into triangles_to_render;
         triangles_to_render[i] = projected_triangle;
     }
 }
 
 void draw_mesh(void) 
 {
+    // TODO : dynarray
+    // size_t triangle_length = dyanarray_get_length()
+    // in the for loop use that triangle_length
     for(int i = 0; i < N_MESH_FACES;i++)
     {
+        // TODO : dynarray_get(i)
         triangle_t triangle = triangles_to_render[i];
         draw_rect(triangle.points[0].x,triangle.points[0].y,3,3,0xFFFF00FF);
         draw_rect(triangle.points[1].x,triangle.points[1].y,3,3,0xFFFF00FF);
@@ -89,4 +97,5 @@ void draw_mesh(void)
                         triangle.points[1].x,triangle.points[1].y,
                         triangle.points[2].x,triangle.points[2].y,0xFFFF0000);
     }
+    // TODO : dynarray : clear the trinagles_to_render
 }

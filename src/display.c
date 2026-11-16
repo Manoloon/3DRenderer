@@ -42,6 +42,16 @@ vec2_t project2D(float FOV,vec3_t points)
     return projected;
 }
 
+void draw_minsky_circle(int x, int y,int num_points, uint32_t color)
+{
+    for(int i= 0; i < num_points; i++)
+    {
+        x -= y>>4;
+        y += x>>4;
+        draw_pixel(x,y,color);
+    }
+}
+
 void draw_pixel(int x, int y, uint32_t color)
 {
     if(x > window_width || x < 0 || y > window_height || y < 0)

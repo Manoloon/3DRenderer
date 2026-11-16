@@ -120,6 +120,7 @@ void draw(void)
     draw_grid(0xFF646464,8);
     vec2_t newPos = {window_width-200,window_height/2};
     draw_vertex_cube(newPos);
+    //draw_minsky_circle(window_width/2,window_height/2,1000,0xFF34FFFF);
     draw_mesh();
     renderColorBuffer();
 
