@@ -111,7 +111,6 @@ void draw_line_DDA(int x1, int y1, int x2, int y2, uint32_t color)
     }
 }
 
-
 void draw_triangle(int x1, int y1, int x2, int y2, int x3, int y3, uint32_t color)
 {
     draw_line_DDA(x1, y1, x2, y2, color);
@@ -155,7 +154,6 @@ void setFullScreen(void)
 
 void destroy_window()
 {
-    free(color_buffer);
     SDL_DestroyTexture(color_buffer_texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

@@ -132,12 +132,19 @@ void draw(void)
     SDL_RenderPresent(renderer);
 }
 
-
 void update(void)
 {  
     prev_frame_time = SDL_GetTicks();
     update_vertex_cube(fov_factor,rotation_speed,camera);
     update_mesh(0.016,world_position,fov_factor,rotation_speed,camera);
+}
+
+void free_resources(void)
+{
+    free(color_buffer);
+    // TODO : VER ESTO
+    free(mesh.vertices);
+    free(mesh.faces);
 }
 
 int main(int argc, char* args[])
@@ -165,5 +172,6 @@ int main(int argc, char* args[])
     }
     gui_shutdown();
     destroy_window();
+    free_resources();
     return 0;
 }

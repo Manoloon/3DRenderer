@@ -4,8 +4,15 @@
 #include "triangle.h"
 #include "globals.h"
 
-vec3_t mesh_rotation = {0.0,0.0,0.0};
-vec3_t mesh_vertices[N_MESH_VERTICES]=
+mesh_t mesh =
+    {
+        .vertices = NULL,
+        .faces = NULL,
+        .rotation = {0.0,0.0,0.0}
+    };
+
+vec3_t cube_rotation = {0.0,0.0,0.0};
+vec3_t cube_vertices[N_CUBE_VERTICES]=
 {
     {.x = -1, .y = -1, .z = -1}, // 1
     {.x = -1, .y =  1, .z = -1}, // 2
@@ -18,7 +25,7 @@ vec3_t mesh_vertices[N_MESH_VERTICES]=
 };
 
 // the numbers are the index .. maybe should start with 0;
-face_t mesh_faces[N_MESH_FACES]=
+face_t cube_faces[N_CUBE_FACES]=
 {
     // front
     {.a = 0, .b = 1, .c = 2},
@@ -40,32 +47,45 @@ face_t mesh_faces[N_MESH_FACES]=
     {.a = 5, .b = 0, .c = 3}
 };
 dynarray_t* triangles_to_render = NULL;
+void load_cube_data(void)
+{
+    for(int i = 0; i < N_CUBE_VERTICES; i++)
+    {
+        vec3_t cube_vertex = cube_vertices[i];
+        // TODO : dyn_push(mesh.vertices,cube_vertex)
+    }
+    for(int i = 0; i < N_CUBE_FACES;i++)
+    {
+        face_t cube_face = cube_faces[i];
+        // TODO : dyn_push(mesh.faces,cube_face);
+    }
+}
 void create_mesh(void)
 {
     triangles_to_render = dynArray_create(sizeof(triangle_t));
 }
 void update_mesh(float delta_time,vec2_t position,float FOV, vec3_t rot_speed,vec3_t camera)
 {
-    mesh_rotation.x += rot_speed.x;
-    mesh_rotation.y += rot_speed.y;
-    mesh_rotation.z += rot_speed.z;
-    for(int i = 0; i < N_MESH_FACES;i++)
+    cube_rotation.x += rot_speed.x;
+    cube_rotation.y += rot_speed.y;
+    cube_rotation.z += rot_speed.z;
+    for(int i = 0; i < N_CUBE_FACES;i++)
     {
-        face_t current_face = mesh_faces[i];
+        face_t current_face = cube_faces[i];
         vec3_t face_vertices[3];
 
-        face_vertices[0] = mesh_vertices[current_face.a]; 
-        face_vertices[1] = mesh_vertices[current_face.b]; 
-        face_vertices[2] = mesh_vertices[current_face.c];
+        face_vertices[0] = cube_vertices[current_face.a]; 
+        face_vertices[1] = cube_vertices[current_face.b]; 
+        face_vertices[2] = cube_vertices[current_face.c];
 
         triangle_t projected_triangle;
         
         for(int j = 0; j < 3;j++)
         {
             vec3_t transform_vertex = face_vertices[j];
-            transform_vertex = vec3_rotate_x(transform_vertex,mesh_rotation.x);
-            transform_vertex = vec3_rotate_y(transform_vertex,mesh_rotation.y);
-            transform_vertex = vec3_rotate_z(transform_vertex,mesh_rotation.z);
+            transform_vertex = vec3_rotate_x(transform_vertex,cube_rotation.x);
+            transform_vertex = vec3_rotate_y(transform_vertex,cube_rotation.y);
+            transform_vertex = vec3_rotate_z(transform_vertex,cube_rotation.z);
             transform_vertex.z -= camera.z;
             vec2_t projected_point = project2D(FOV,transform_vertex);
             projected_point.x += position.x;
