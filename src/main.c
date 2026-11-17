@@ -41,6 +41,7 @@ bool begin_play()
     }
     // cube
     create_vertex_cube();
+    create_mesh();
     return true;
 }
 

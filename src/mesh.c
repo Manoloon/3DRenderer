@@ -39,20 +39,16 @@ face_t mesh_faces[N_MESH_FACES]=
     {.a = 5, .b = 7, .c = 0},
     {.a = 5, .b = 0, .c = 3}
 };
-// TODO : dynarray
-// dynarray_t* triangles_to_render = NULL;
-triangle_t triangles_to_render[N_MESH_FACES];
+dynarray_t* triangles_to_render = NULL;
 void create_mesh(void)
 {
-    // dyn_init(triangles_to_render,sizeof(triangle_t));
+    triangles_to_render = dynArray_create(sizeof(triangle_t));
 }
 void update_mesh(float delta_time,vec2_t position,float FOV, vec3_t rot_speed,vec3_t camera)
 {
     mesh_rotation.x += rot_speed.x;
     mesh_rotation.y += rot_speed.y;
     mesh_rotation.z += rot_speed.z;
-    // TODO : dynarray reset
-    // dynarray_free(triangles_to_render);
     for(int i = 0; i < N_MESH_FACES;i++)
     {
         face_t current_face = mesh_faces[i];
@@ -76,26 +72,30 @@ void update_mesh(float delta_time,vec2_t position,float FOV, vec3_t rot_speed,ve
             projected_point.y += position.y;
             projected_triangle.points[j] = projected_point;
         }
-        // TODO : pushback projected_triangle into triangles_to_render;
-        triangles_to_render[i] = projected_triangle;
+        uint8_t code = dynArray_push_back(triangles_to_render,&projected_triangle);
+        if(code != 0)
+        {
+            exit(EXIT_FAILURE);
+        }
     }
 }
 
-void draw_mesh(void) 
+void draw_mesh(void)
 {
-    // TODO : dynarray
-    // size_t triangle_length = dyanarray_get_length()
-    // in the for loop use that triangle_length
-    for(int i = 0; i < N_MESH_FACES;i++)
+    size_t triangle_length = dynArray_get_length(triangles_to_render);
+    for (int i = 0; i < triangle_length; i++)
     {
-        // TODO : dynarray_get(i)
-        triangle_t triangle = triangles_to_render[i];
-        draw_rect(triangle.points[0].x,triangle.points[0].y,3,3,0xFFFF00FF);
-        draw_rect(triangle.points[1].x,triangle.points[1].y,3,3,0xFFFF00FF);
-        draw_rect(triangle.points[2].x,triangle.points[2].y,3,3,0xFFFF00FF);
-        draw_triangle(triangle.points[0].x,triangle.points[0].y,
-                        triangle.points[1].x,triangle.points[1].y,
-                        triangle.points[2].x,triangle.points[2].y,0xFFFF0000);
+        triangle_t *triangle = dynArray_get_item(triangles_to_render, i); //triangles_to_render[i];
+        draw_rect(triangle->points[0].x, triangle->points[0].y, 3, 3, 0xFFFF00FF);
+        draw_rect(triangle->points[1].x, triangle->points[1].y, 3, 3, 0xFFFF00FF);
+        draw_rect(triangle->points[2].x, triangle->points[2].y, 3, 3, 0xFFFF00FF);
+        draw_triangle(triangle->points[0].x,
+                      triangle->points[0].y,
+                      triangle->points[1].x,
+                      triangle->points[1].y,
+                      triangle->points[2].x,
+                      triangle->points[2].y,
+                      0xFFFF0000);
     }
-    // TODO : dynarray : clear the trinagles_to_render
+    dynArray_clear(triangles_to_render);
 }

@@ -15,7 +15,9 @@ add_executable(3DRenderer src/main.c src/mesh.c
 
 # Include SDL2 headers
 target_include_directories(3DRenderer PRIVATE ${SDL2_INCLUDE_DIRS}
-                            ${CMAKE_CURRENT_SOURCE_DIR}/External)
+                            ${CMAKE_CURRENT_SOURCE_DIR}/External
+                            ${CMAKE_CURRENT_SOURCE_DIR}/External/UtilityDS/include)
 
 # Link SDL2 library
-target_link_libraries(3DRenderer PRIVATE ${SDL2_LIBRARIES})
+target_link_libraries(3DRenderer PRIVATE ${SDL2_LIBRARIES} 
+        "${CMAKE_CURRENT_SOURCE_DIR}/external/UtilityDS/lib/libUtilityDS.a")
