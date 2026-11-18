@@ -54,7 +54,7 @@ void draw_minsky_circle(int x, int y,int num_points, uint32_t color)
 
 void draw_pixel(int x, int y, uint32_t color)
 {
-    if(x > window_width || x < 0 || y > window_height || y < 0)
+    if(x > (int)window_width || x < 0 || y > (int)window_height || y < 0)
     {
         return;
     }
@@ -63,8 +63,8 @@ void draw_pixel(int x, int y, uint32_t color)
 
 void draw_rect(int x, int y, int width, int height, uint32_t color)
 {
-    if(x > window_width || x < 0) return;
-    if(y > window_height || y < 0) return;
+    if(x > (int)window_width || x < 0) return;
+    if(y > (int)window_height || y < 0) return;
     int currentX =0;
     for(int currentY=0; currentY < height; currentY++)
     {
@@ -81,9 +81,9 @@ void draw_grid(uint32_t color, uint8_t cellSize)
 {
     if(cellSize < 1) return;
     int x = 0;
-    for(int y = 0; y < window_height;y+=cellSize)
+    for(int y = 0; y < (int)window_height;y+=cellSize)
     {
-        while(x < window_width)
+        while(x < (int)window_width)
         {
             color_buffer[(window_width * y) + x] = color;
             x+=cellSize;
@@ -120,9 +120,9 @@ void draw_triangle(int x1, int y1, int x2, int y2, int x3, int y3, uint32_t colo
 
 void clearColorBuffer(uint32_t color)
 {
-    for (int y = 0; y < window_height; y++)
+    for (int y = 0; y < (int)window_height; y++)
     {
-        for (int x = 0; x < window_width; x++)
+        for (int x = 0; x < (int)window_width; x++)
         {
             color_buffer[(window_width * y) + x] = color;
         }

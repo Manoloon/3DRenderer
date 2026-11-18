@@ -18,7 +18,7 @@
 static struct nk_context* ctx = NULL;
 static bool initialized = false;
 
-bool gui_init(SDL_Window* window,SDL_Renderer* renderer)
+bool gui_init(SDL_Window* _window,SDL_Renderer* _renderer)
 {
     if(!window || !renderer)
     {
@@ -26,7 +26,7 @@ bool gui_init(SDL_Window* window,SDL_Renderer* renderer)
         return false;
     }
         
-    ctx = nk_sdl_init(window,renderer);
+    ctx = nk_sdl_init(_window,_renderer);
     if(!ctx)
     {
         fprintf(stderr,"Gui: Context failed");

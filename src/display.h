@@ -20,4 +20,5 @@ void clearColorBuffer(uint32_t color);
 void updateColorBuffer(void);
 void renderColorBuffer(void);
 void setFullScreen(void);
+
 #endif

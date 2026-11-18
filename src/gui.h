@@ -5,7 +5,7 @@
 
 struct nk_context;
 
-bool gui_init(SDL_Window* window,SDL_Renderer* renderer);
+bool gui_init(SDL_Window* _window,SDL_Renderer* _renderer);
 void gui_process_event(SDL_Event* event);
 void gui_begin(void);
 void gui_build(void);
