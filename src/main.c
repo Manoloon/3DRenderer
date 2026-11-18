@@ -170,8 +170,8 @@ int main(int argc, char* args[])
         update();
         draw();
     }
-    gui_shutdown();
     destroy_window();
+    gui_shutdown();
     free_resources();
     return 0;
 }
