@@ -29,23 +29,23 @@ vec3_t cube_vertices[N_CUBE_VERTICES]=
 face_t cube_faces[N_CUBE_FACES]=
 {
     // front
-    {.a = 0, .b = 1, .c = 2},
-    {.a = 0, .b = 2, .c = 3},
+    {.a = 1, .b = 2, .c = 3},
+    {.a = 1, .b = 3, .c = 4},
     // right
-    {.a = 3, .b = 2, .c = 4},
-    {.a = 3, .b = 4, .c = 5},
+    {.a = 4, .b = 3, .c = 5},
+    {.a = 4, .b = 5, .c = 6},
     // back
-    {.a = 5, .b = 4, .c = 6},
-    {.a = 5, .b = 6, .c = 7},
+    {.a = 6, .b = 5, .c = 7},
+    {.a = 6, .b = 7, .c = 8},
     // left
-    {.a = 7, .b = 6, .c = 1},
-    {.a = 7, .b = 1, .c = 0},
+    {.a = 8, .b = 7, .c = 2},
+    {.a = 8, .b = 2, .c = 1},
     // top
-    {.a = 1, .b = 6, .c = 4},
-    {.a = 1, .b = 4, .c = 2},
+    {.a = 2, .b = 7, .c = 5},
+    {.a = 2, .b = 5, .c = 3},
     // botton
-    {.a = 5, .b = 7, .c = 0},
-    {.a = 5, .b = 0, .c = 3}
+    {.a = 6, .b = 8, .c = 1},
+    {.a = 6, .b = 1, .c = 4}
 };
 dynarray_t* triangles_to_render = NULL;
 void load_cube_data(void)
@@ -90,9 +90,9 @@ void update_mesh(vec2_t position,float FOV, vec3_t rot_speed,vec3_t camera)
         face_t* current_face = dynArray_get_item(mesh.faces,i);
         vec3_t* face_vertices[3];
 
-        face_vertices[0] = dynArray_get_item(mesh.vertices,current_face->a); 
-        face_vertices[1] = dynArray_get_item(mesh.vertices,current_face->b);
-        face_vertices[2] = dynArray_get_item(mesh.vertices,current_face->c); 
+        face_vertices[0] = dynArray_get_item(mesh.vertices,current_face->a -1); 
+        face_vertices[1] = dynArray_get_item(mesh.vertices,current_face->b -1);
+        face_vertices[2] = dynArray_get_item(mesh.vertices,current_face->c -1); 
 
         triangle_t projected_triangle;
         
