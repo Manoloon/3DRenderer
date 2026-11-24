@@ -1,9 +1,11 @@
 #include "mesh.h"
 #include "display.h"
-
+#include "parser.h"
 #include "exercises.h"
 #include "triangle.h"
 #include "globals.h"
+
+FILE* obj_file = NULL;
 
 mesh_t mesh =
     {
@@ -11,19 +13,6 @@ mesh_t mesh =
         .faces = NULL,
         .rotation = {0.0,0.0,0.0}
     };
-
-//vec3_t cube_rotation = {0.0,0.0,0.0};
-vec3_t cube_vertices[N_CUBE_VERTICES]=
-{
-    {.x = -1, .y = -1, .z = -1}, // 1
-    {.x = -1, .y =  1, .z = -1}, // 2
-    {.x =  1, .y =  1, .z = -1}, // 3
-    {.x =  1, .y = -1, .z = -1}, // 4
-    {.x =  1, .y =  1, .z =  1}, // 5
-    {.x =  1, .y = -1, .z =  1}, // 6
-    {.x = -1, .y =  1, .z =  1}, // 7
-    {.x = -1, .y = -1, .z =  1}, // 8
-};
 
 // the numbers are the index .. maybe should start with 0;
 face_t cube_faces[N_CUBE_FACES]=
@@ -48,36 +37,24 @@ face_t cube_faces[N_CUBE_FACES]=
     {.a = 6, .b = 1, .c = 4}
 };
 dynarray_t* triangles_to_render = NULL;
-void load_cube_data(void)
-{
-    mesh.vertices = dynArray_create(sizeof(vec3_t));
-    if(mesh.vertices == NULL)
-    {
-        fprintf(stderr,"loadCube : Mesh.vertices is NULL");
-        exit(EXIT_FAILURE);
-    }
-    mesh.faces = dynArray_create(sizeof(face_t));
-    if(mesh.faces == NULL)
-    {
-        fprintf(stderr,"loadCube : Mesh.faces is NULL");
-        exit(EXIT_FAILURE);
-    }
-    
-    for(int i = 0; i < N_CUBE_VERTICES; i++)
-    {
-        vec3_t cube_vertex = cube_vertices[i];
-        dynArray_push_back(mesh.vertices,&cube_vertex);
-    }
-    for(int i = 0; i < N_CUBE_FACES;i++)
-    {
-        face_t cube_face = cube_faces[i];
-        dynArray_push_back(mesh.faces,&cube_face);
-    }
-}
+
 void create_mesh(void)
 {
     triangles_to_render = dynArray_create(sizeof(triangle_t));
-    load_cube_data();
+    // loading obj
+    const char* filename = "assets/cube.obj";
+    obj_file = fopen(filename,"r");
+    if(obj_file == NULL)
+    {
+        fprintf(stderr,"Create Mesh: failed to load obj file\n");
+        exit(EXIT_FAILURE);
+    }
+    bool bsuccess = start_parsing(obj_file,&mesh);
+    if(!bsuccess)
+    {
+        fprintf(stderr,"Create Mesh : failed parsing\n");
+        exit(EXIT_FAILURE);
+    }
 }
 void update_mesh(vec2_t position,float FOV, vec3_t rot_speed,vec3_t camera)
 {
