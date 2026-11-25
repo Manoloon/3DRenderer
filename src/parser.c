@@ -1,27 +1,20 @@
 #include "parser.h"
 #include "triangle.h"
+#include <string.h>
 #include <stdlib.h>
 void parse_face(const char *input,mesh_t* in_mesh)
 {
     face_t face;
-    const int type = 10;
-    char *endptr = NULL;
+    // const int type = 10;
+    //char *endptr = NULL;
+    int vertex_index[3];
+    int texture_index[3];
+    int normal_index[3];
     // face
-    face.a = strtol(input + 2, &endptr, type);
-    face.b = strtol(endptr + 1, &endptr, type);
-    face.c = strtol(endptr + 1, &endptr, type);
-
-    // face.v2.a = strtol(endptr + 1, &endptr, type);
-    // face.v2.b = strtol(endptr + 1, &endptr, type);
-    // face.v2.c = strtol(endptr + 1, &endptr, type);
-
-    // face.v3.a = strtol(endptr + 1, &endptr, type);
-    // face.v3.b = strtol(endptr + 1, &endptr, type);
-    // face.v3.c = strtol(endptr + 1, &endptr, type);
-
-    //printf("face v1 a:%d, b=%d, c:%d\n", face.v1.a, face.v1.b, face.v1.c);
-    //printf("face v2 a:%d, b=%d, c:%d\n", face.v2.a, face.v2.b, face.v2.c);
-    //printf("face v3 a:%d, b=%d, c:%d\n", face.v3.a, face.v3.b, face.v3.c);
+    sscanf(input,"f  %d/%d/%d %d/%d/%d %d/%d/%d",
+        &vertex_index[0],&texture_index[0],&normal_index[0],
+        &vertex_index[1],&texture_index[1],&normal_index[1],
+        &vertex_index[2],&texture_index[2],&normal_index[2]);
     dynArray_push_back(in_mesh->faces, &face);
 }
 
@@ -44,8 +37,18 @@ void parse_line(dynarray_t *input,mesh_t* in_mesh)
         fprintf(stderr, "input is NULL\n");
         return;
     }
-    size_t size = dynArray_get_length(input);
+    //size_t size = dynArray_get_length(input);
     const char *items = dynArray_get_items(input);
+    // vertex
+    if(strncmp(items,"v ",2))
+    {
+        parse_vertex(items,in_mesh);
+    }
+    else if (strncmp(items,"f ",2))
+    {
+        parse_face(items,in_mesh);
+    }
+    /*
     if (size > 2)
     {
         // vertex
@@ -66,7 +69,7 @@ void parse_line(dynarray_t *input,mesh_t* in_mesh)
         default:
             break;
         }
-    }
+    }*/
     dynArray_clear(input);
 }
 
