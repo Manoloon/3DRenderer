@@ -113,5 +113,6 @@ bool start_parsing(FILE *file, mesh_t* in_mesh)
             parse_line(line_buffer,in_mesh);
         }
     }
+    dynArray_free(&line_buffer);
     return true;
 }
