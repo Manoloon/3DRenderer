@@ -5,12 +5,6 @@
 #include "dynamicArray.h"
 #include <stdio.h>
 #include <stdbool.h>
-// DEMO CUBE
-#define N_CUBE_VERTICES 8
-#define N_CUBE_FACES 12
-
-extern face_t cube_faces[N_CUBE_FACES];
-extern FILE* obj_file;
 ///////////////////////////////////////////////////////////////
 
 typedef struct

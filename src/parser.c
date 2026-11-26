@@ -5,16 +5,17 @@
 void parse_face(const char *input,mesh_t* in_mesh)
 {
     face_t face;
+    texture_t texture;
+    normal_t normal;
     // const int type = 10;
     //char *endptr = NULL;
     //int vertex_index[3];
-    int texture_index[3];
-    int normal_index[3];
+
     // face
     sscanf(input,"f  %d/%d/%d %d/%d/%d %d/%d/%d",
-        &face.a,&texture_index[0],&normal_index[0],
-        &face.b,&texture_index[1],&normal_index[1],
-        &face.c,&texture_index[2],&normal_index[2]);
+        &face.a,&texture.a,&normal.a,
+        &face.b,&texture.b,&normal.b,
+        &face.c,&texture.c,&normal.c);
     dynArray_push_back(in_mesh->faces, &face);
 }
 

@@ -7,7 +7,18 @@ typedef struct
     int b;
     int c;
 }face_t;
-
+typedef struct
+{
+    int a;
+    int b;
+    int c;
+} texture_t;
+typedef struct
+{
+    int a;
+    int b;
+    int c;
+} normal_t;
 typedef struct
 {
     vec2_t points[3];
