@@ -22,7 +22,7 @@ bool create_mesh(void)
         return false;
     }
     // loading obj
-    const char* filename = "assets/cube.obj";
+    const char* filename = "assets/f22.obj";
     bool bsuccess = start_parsing(filename,&mesh);
     return bsuccess;
 }

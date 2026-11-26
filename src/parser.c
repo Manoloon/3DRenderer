@@ -21,11 +21,11 @@ void parse_face(const char *input,mesh_t* in_mesh)
 void parse_vertex(const char *input,mesh_t* in_mesh)
 {
     vec3_t vertex;
-    sscanf(input,"v %f %f %f",&vertex.x,&vertex.y,&vertex.z);
-    // char *endptr = NULL;
-    // vertex.x = strtof(input + 2, &endptr);
-    // vertex.y = strtof(endptr, &endptr);
-    // vertex.z = strtof(endptr, &endptr);
+    //sscanf(input,"v %f %f %f",&vertex.x,&vertex.y,&vertex.z);
+    char *endptr = NULL;
+    vertex.x = strtof(input + 2, &endptr);
+    vertex.y = strtof(endptr, &endptr);
+    vertex.z = strtof(endptr, &endptr);
     //vector.w = strtof(endptr,&endptr);
     
     dynArray_push_back(in_mesh->vertices, &vertex);
