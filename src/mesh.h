@@ -4,6 +4,7 @@
 #include "triangle.h"
 #include "dynamicArray.h"
 #include <stdio.h>
+#include <stdbool.h>
 // DEMO CUBE
 #define N_CUBE_VERTICES 8
 #define N_CUBE_FACES 12
@@ -21,7 +22,7 @@ typedef struct
 
 extern mesh_t mesh;
 
-void create_mesh(void);
+bool create_mesh(void);
 void update_mesh(vec2_t position,float FOV, vec3_t rot_speed,vec3_t camera);
 void draw_mesh(void);
 

@@ -5,71 +5,41 @@
 #include "triangle.h"
 #include "globals.h"
 
-FILE* obj_file = NULL;
-
 mesh_t mesh =
     {
         .vertices = NULL,
         .faces = NULL,
         .rotation = {0.0,0.0,0.0}
     };
-
-// the numbers are the index .. maybe should start with 0;
-face_t cube_faces[N_CUBE_FACES]=
-{
-    // front
-    {.a = 1, .b = 2, .c = 3},
-    {.a = 1, .b = 3, .c = 4},
-    // right
-    {.a = 4, .b = 3, .c = 5},
-    {.a = 4, .b = 5, .c = 6},
-    // back
-    {.a = 6, .b = 5, .c = 7},
-    {.a = 6, .b = 7, .c = 8},
-    // left
-    {.a = 8, .b = 7, .c = 2},
-    {.a = 8, .b = 2, .c = 1},
-    // top
-    {.a = 2, .b = 7, .c = 5},
-    {.a = 2, .b = 5, .c = 3},
-    // botton
-    {.a = 6, .b = 8, .c = 1},
-    {.a = 6, .b = 1, .c = 4}
-};
 dynarray_t* triangles_to_render = NULL;
 
-void create_mesh(void)
+bool create_mesh(void)
 {
     triangles_to_render = dynArray_create(sizeof(triangle_t));
-    // loading obj
-    const char* filename = "assets/cube.obj";
-    obj_file = fopen(filename,"r");
-    if(obj_file == NULL)
+    if(triangles_to_render == NULL)
     {
         fprintf(stderr,"Create Mesh: failed to load obj file\n");
-        exit(EXIT_FAILURE);
+        return false;
     }
-    bool bsuccess = start_parsing(obj_file,&mesh);
-    if(!bsuccess)
-    {
-        fprintf(stderr,"Create Mesh : failed parsing\n");
-        exit(EXIT_FAILURE);
-    }
+    // loading obj
+    const char* filename = "assets/cube.obj";
+    bool bsuccess = start_parsing(filename,&mesh);
+    return bsuccess;
 }
 void update_mesh(vec2_t position,float FOV, vec3_t rot_speed,vec3_t camera)
 {
+    int faces_num = (int) dynArray_get_length(mesh.faces);
     mesh.rotation.x += rot_speed.x;
     mesh.rotation.y += rot_speed.y;
     mesh.rotation.z += rot_speed.z;
-    int faces_num = (int) dynArray_get_length(mesh.faces);
+
     for(int i = 0; i < faces_num;i++)
     {
         face_t* current_face = dynArray_get_item(mesh.faces,i);
         vec3_t* face_vertices[3];
-
-        face_vertices[0] = dynArray_get_item(mesh.vertices,current_face->a -1); 
-        face_vertices[1] = dynArray_get_item(mesh.vertices,current_face->b -1);
-        face_vertices[2] = dynArray_get_item(mesh.vertices,current_face->c -1); 
+        face_vertices[0] =dynArray_get_item(mesh.vertices,current_face->a-1); 
+        face_vertices[1] =dynArray_get_item(mesh.vertices,current_face->b-1);
+        face_vertices[2] =dynArray_get_item(mesh.vertices,current_face->c-1); 
 
         triangle_t projected_triangle;
         
@@ -85,8 +55,8 @@ void update_mesh(vec2_t position,float FOV, vec3_t rot_speed,vec3_t camera)
             projected_point.y += position.y;
             projected_triangle.points[j] = projected_point;
         }
-        uint8_t code = dynArray_push_back(triangles_to_render,&projected_triangle);
-        if(code != 0)
+        uint8_t bSuccess = dynArray_push_back(triangles_to_render,&projected_triangle);
+        if(bSuccess != 0)
         {
             exit(EXIT_FAILURE);
         }
