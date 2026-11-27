@@ -13,7 +13,7 @@ mesh_t mesh =
     };
 dynarray_t* triangles_to_render = NULL;
 
-bool create_mesh(void)
+bool create_mesh(char* filename)
 {
     triangles_to_render = dynArray_create(sizeof(triangle_t));
     if(triangles_to_render == NULL)
@@ -21,9 +21,14 @@ bool create_mesh(void)
         fprintf(stderr,"Create Mesh: failed to load obj file\n");
         return false;
     }
+    const char* file = "assets/cube.obj";
     // loading obj
-    const char* filename = "assets/f22.obj";
-    bool bsuccess = start_parsing(filename,&mesh);
+    if(filename != NULL)
+    {
+        file = filename;
+    }
+    
+    bool bsuccess = start_parsing(file,&mesh);
     return bsuccess;
 }
 void update_mesh(vec2_t position,float FOV, vec3_t rot_speed,vec3_t camera)

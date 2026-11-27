@@ -22,7 +22,7 @@ uint32_t prev_frame_time = 0;
 vec3_t camera ={0.0,0.0,-10.0};
 
 // remember 0xFFEE1100 -> 0xAA-RR-GG-BB
-bool begin_play()
+bool begin_play(char* _filename)
 {
     color_buffer = (uint32_t*)malloc(sizeof(uint32_t) * window_width * window_height);
     if(color_buffer == NULL)
@@ -41,7 +41,7 @@ bool begin_play()
     }
     // cube
     create_vertex_cube();
-    return create_mesh();
+    return create_mesh(_filename);
 }
 
 int process_input(void)
@@ -146,10 +146,15 @@ void free_resources(void)
     free(mesh.faces);
 }
 
-int main(int argc, char* args[])
+int main(int argc, char* argv[])
 {
+    char* filename = NULL;
+    if(argc > 1)
+    {
+        filename = argv[1];
+    }
     is_app_running = init_window();
-    if(!begin_play())
+    if(!begin_play(filename))
     {
         is_app_running = false;
     }

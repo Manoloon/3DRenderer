@@ -16,7 +16,7 @@ typedef struct
 
 extern mesh_t mesh;
 
-bool create_mesh(void);
+bool create_mesh(char* filename);
 void update_mesh(vec2_t position,float FOV, vec3_t rot_speed,vec3_t camera);
 void draw_mesh(void);
 
