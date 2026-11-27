@@ -13,11 +13,20 @@ float vec2_length_squared(vec2_t v)
 
 vec2_t vec2_add(vec2_t a, vec2_t b)
 {
-    vec2_t new_vec = 
-    {
-        a.x + b.x, a.y + b.y
-    };
+    vec2_t new_vec = {a.x + b.x, a.y + b.y};
 
+    return new_vec;
+}
+
+vec2_t vec2_sub(vec2_t a, vec2_t b)
+{
+    vec2_t new_vec = {a.x - b.x, a.y - b.y};
+    return new_vec;
+}
+
+vec2_t vec2_mult(vec2_t a, vec2_t b)
+{
+    vec2_t new_vec = {a.x * b.x, a.y * b.y};
     return new_vec;
 }
 
@@ -32,41 +41,53 @@ float vec3_length_squared(vec3_t v)
 }
 
 vec3_t vec3_add(vec3_t a, vec3_t b)
-{ 
-    vec3_t new_vec = 
-        {
-            a.x + b.x,
-            a.y + b.y,
-            a.z + b.z
-        };
-    return new_vec; 
+{
+    vec3_t new_vec = {a.x + b.x, a.y + b.y, a.z + b.z};
+    return new_vec;
+}
+
+vec3_t vec3_sub(vec3_t a, vec3_t b)
+{
+    vec3_t new_vec = {a.x - b.x, a.y - b.y, a.z - b.z};
+    return new_vec;
+}
+
+vec3_t vec3_mult(vec3_t a, vec3_t b)
+{
+    vec3_t new_vec = {a.x * b.x, a.y * b.y, a.z * b.z};
+    return new_vec;
+}
+
+vec3_t vec3_projection(vec3_t v)
+{
+    if(v.z < 1.0)
+    {
+        vec3_t result = {v.x , v.y, 1};
+        return result;
+    }
+    const float Rz = 1.f / v.z;
+    vec3_t result = {v.x * Rz, v.y * Rz, 1};
+    return result;
 }
 
 vec3_t vec3_rotate_z(vec3_t vec, float angle)
 {
-    vec3_t rotated =
-    {
-        vec.x * cos(angle) - vec.y * sin(angle),
-        vec.y * cos(angle) + vec.x * sin(angle),
-        vec.z
-    };
-return rotated;
+    vec3_t rotated = {vec.x * cos(angle) - vec.y * sin(angle), vec.y * cos(angle) + vec.x * sin(angle), vec.z};
+    return rotated;
 }
 
-vec3_t vec3_rotate_x(vec3_t vec, float angle) {
-  vec3_t rotated = {.x = vec.x,
-                    .y = vec.y * cos(angle) - vec.z * sin(angle),
-                    .z = vec.z * cos(angle) + vec.y * sin(angle)};
-  return rotated;
+vec3_t vec3_rotate_x(vec3_t vec, float angle)
+{
+    vec3_t rotated = {.x = vec.x,
+                      .y = vec.y * cos(angle) - vec.z * sin(angle),
+                      .z = vec.z * cos(angle) + vec.y * sin(angle)};
+    return rotated;
 }
 
-vec3_t vec3_rotate_y(vec3_t vec, float angle) 
-{ 
-    vec3_t rotated = 
-    {
-        .x = vec.x * cos(angle) - vec.z * sin(angle),
-        .y = vec.y,
-        .z = vec.z * cos(angle) + vec.x * sin(angle)
-    };
-    return rotated; 
+vec3_t vec3_rotate_y(vec3_t vec, float angle)
+{
+    vec3_t rotated = {.x = vec.x * cos(angle) - vec.z * sin(angle),
+                      .y = vec.y,
+                      .z = vec.z * cos(angle) + vec.x * sin(angle)};
+    return rotated;
 }
