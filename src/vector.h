@@ -14,6 +14,15 @@ typedef struct
     float z;
 }vec3_t;
 
+/// Vector2D
+float vec2_length(vec2_t v);
+float vec2_length_squared(vec2_t v);
+vec2_t vec2_add(vec2_t a,vec2_t b);
+
+/// Vector3D 
+float vec3_length(vec3_t v);
+float vec3_length_squared(vec3_t v);
+
 vec3_t vec3_add(vec3_t a , vec3_t b);
 vec3_t vec3_rotate_x(vec3_t vec,float angle);
 vec3_t vec3_rotate_y(vec3_t vec,float angle);

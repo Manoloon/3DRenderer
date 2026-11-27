@@ -1,9 +1,7 @@
 #ifndef PARSER_H
 #define PARSER_H
-#include "dynamicArray.h"
 #include "mesh.h"
 #include <stdbool.h>
-#include <stdio.h>
 
 void parse_face(const char *input,mesh_t* in_mesh);
 

@@ -1,5 +1,7 @@
 #include "parser.h"
 #include "triangle.h"
+#include "dynamicArray.h"
+#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 void parse_face(const char *input,mesh_t* in_mesh)
